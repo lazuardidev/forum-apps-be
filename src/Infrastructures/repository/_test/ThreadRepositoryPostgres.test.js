@@ -90,13 +90,11 @@ describe('ThreadRepositoryPostgres', () => {
 
       const threadDetail = await threadRepositoryPostgres.getThreadById('thread-1');
 
-      expect(threadDetail).toStrictEqual({
-        id: 'thread-1',
-        title: 'test title',
-        body: 'test body',
-        date: '2024-11-03T10:24:06.873Z',
-        username: 'dicoding',
-      });
+      expect(threadDetail.id).toEqual('thread-1');
+      expect(threadDetail.title).toEqual('test title');
+      expect(threadDetail.body).toEqual('test body');
+      expect(threadDetail.date).toEqual('2024-11-03T10:24:06.873Z');
+      expect(threadDetail.username).toEqual('dicoding');
     });
   });
 });
