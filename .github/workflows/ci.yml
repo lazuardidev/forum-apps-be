@@ -18,9 +18,9 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          POSTGRES_USER: ${{ secrets.PGUSER_TEST }}
+          POSTGRES_PASSWORD: ${{ secrets.PGPASSWORD_TEST }}
+          POSTGRES_DB: ${{ secrets.PGDATABASE_TEST }}
 
         options: >-
           --health-cmd pg_isready
@@ -45,15 +45,15 @@ jobs:
           CI: true
           HOST: ${{ secrets.HOST }}
           PORT: ${{ secrets.PORT }}
-          PGHOST: ${{ secrets.PGHOST }}
-          PGUSER: ${{ secrets.PGUSER }}
-          PGDATABASE: ${{ secrets.PGDATABASE }}
-          PGPASSWORD: ${{ secrets.PGPASSWORD }}
-          PGPORT: ${{ secrets.PGPORT }}
-          PGHOST_TEST: ${{ secrets.PGHOST_TEST }}
+          PGHOST: ${{ secrets.PGHOST_TEST }}
           PGUSER_TEST: ${{ secrets.PGUSER_TEST }}
           PGDATABASE_TEST: ${{ secrets.PGDATABASE_TEST }}
           PGPASSWORD_TEST: ${{ secrets.PGPASSWORD_TEST }}
+          PGPORT: ${{ secrets.PGPORT_TEST }}
+          PGHOST_TEST: ${{ secrets.PGHOST_TEST }}
+          PGUSER: ${{ secrets.PGUSER_TEST }}
+          PGDATABASE: ${{ secrets.PGDATABASE_TEST }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD_TEST }}
           PGPORT_TEST: ${{ secrets.PGPORT_TEST }}
           ACCESS_TOKEN_KEY: ${{ secrets.ACCESS_TOKEN_KEY }}
           REFRESH_TOKEN_KEY: ${{ secrets.REFRESH_TOKEN_KEY }}
