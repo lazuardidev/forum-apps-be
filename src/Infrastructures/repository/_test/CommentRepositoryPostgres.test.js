@@ -146,13 +146,12 @@ describe('CommentRepositoryPostgres', () => {
 
       const comments = await commentRepositoryPostgres.getCommentsByThreadId('thread-1');
 
-      expect(comments).toStrictEqual([{
-        id: 'comment-1',
-        username: 'dicoding',
-        date: '2024-11-03T10:24:06.873Z',
-        content: 'test content',
-        is_delete: false,
-      }]);
+      expect(comments).toHaveLength(1);
+      expect(comments[0].id).toEqual('comment-1');
+      expect(comments[0].username).toEqual('dicoding');
+      expect(comments[0].date).toEqual('2024-11-03T10:24:06.873Z');
+      expect(comments[0].content).toEqual('test content');
+      expect(comments[0].is_delete).toEqual(false);
     });
   });
 });

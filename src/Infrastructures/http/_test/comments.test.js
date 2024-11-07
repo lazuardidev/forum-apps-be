@@ -17,6 +17,28 @@ describe('/threads/{threadId}/comments endpoint', () => {
   });
 
   describe('when POST /threads/{threadId}/comments', () => {
+    it('should response 401 when attempting to add comment without authentication', async () => {
+      const requestPayload = {
+        content: 'test content',
+      };
+      const threadId = 'thread-1';
+      const owner = 'user-1';
+      await UsersTableTestHelper.addUser({ id: owner, username: 'dicoding' });
+      await ThreadsTableTestHelper.addThread({ id: threadId, owner });
+      const server = await createServer(container);
+
+      const response = await server.inject({
+        method: 'POST',
+        url: `/threads/${threadId}/comments`,
+        payload: requestPayload,
+      });
+
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(401);
+      expect(responseJson.error).toEqual('Unauthorized');
+      expect(responseJson.message).toEqual('Missing authentication');
+    });
+
     it('should response 201 and persisted comment', async () => {
       const requestPayload = {
         content: 'test content',
@@ -73,6 +95,26 @@ describe('/threads/{threadId}/comments endpoint', () => {
   });
 
   describe('when DELETE /threads/{threadId}/comments/{commentId}', () => {
+    it('should response 401 when attempting to delete comment without authentication', async () => {
+      const threadId = 'thread-1';
+      const commentId = 'comment-1';
+      const owner = 'user-1';
+      await UsersTableTestHelper.addUser({ id: owner, username: 'dicoding' });
+      await ThreadsTableTestHelper.addThread({ id: threadId, owner });
+      await CommentsTableTestHelper.addComment({ id: commentId, threadId, owner });
+      const server = await createServer(container);
+
+      const response = await server.inject({
+        method: 'DELETE',
+        url: `/threads/${threadId}/comments/${commentId}`,
+      });
+
+      const responseJson = JSON.parse(response.payload);
+      expect(response.statusCode).toEqual(401);
+      expect(responseJson.error).toEqual('Unauthorized');
+      expect(responseJson.message).toEqual('Missing authentication');
+    });
+
     it('should response 201 and delete comment', async () => {
       const server = await createServer(container);
 

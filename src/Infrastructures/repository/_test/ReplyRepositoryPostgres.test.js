@@ -109,18 +109,18 @@ describe('ReplyRepositoryPostgres', () => {
       const credentialId = 'user-1';
       await UsersTableTestHelper.addUser({ id: credentialId, username: 'dicoding' });
       await ThreadsTableTestHelper.addThread({ id: threadId, title: 'test' });
-      await CommentsTableTestHelper.addComment({ id: commentId, content: 'testing' });
+      await CommentsTableTestHelper.addComment({ id: commentId, content: 'test content' });
       const newReply = new NewReply({
         content: 'test content',
       });
-      const fakeIdGenerator = () => '123';
+      const fakeIdGenerator = () => '1';
       const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, fakeIdGenerator);
 
       await replyRepositoryPostgres.addReply(threadId, commentId, newReply, credentialId);
 
-      const replies = await RepliesTableTestHelper.findRepliesById('reply-123');
+      const replies = await RepliesTableTestHelper.findRepliesById('reply-1');
       expect(replies).toHaveLength(1);
-      expect(replies[0].id).toEqual('reply-123');
+      expect(replies[0].id).toEqual('reply-1');
       expect(replies[0].thread_id).toEqual(threadId);
       expect(replies[0].comment_id).toEqual(commentId);
       expect(replies[0].owner).toEqual(credentialId);
@@ -133,7 +133,7 @@ describe('ReplyRepositoryPostgres', () => {
       const credentialId = 'user-1';
       await UsersTableTestHelper.addUser({ id: credentialId, username: 'dicoding' });
       await ThreadsTableTestHelper.addThread({ id: threadId, title: 'test' });
-      await CommentsTableTestHelper.addComment({ id: commentId, content: 'testing' });
+      await CommentsTableTestHelper.addComment({ id: commentId, content: 'test content' });
       const newReply = new NewReply({
         content: 'test content',
       });
@@ -186,14 +186,13 @@ describe('ReplyRepositoryPostgres', () => {
 
       const replies = await repliesRepositoryPostgres.getRepliesByThreadId('thread-1');
 
-      expect(replies).toStrictEqual([{
-        id: 'reply-1',
-        content: 'test content',
-        date: '2024-11-03T10:24:06.873Z',
-        username: 'dicoding',
-        is_delete: false,
-        comment_id: 'comment-1',
-      }]);
+      expect(replies).toHaveLength(1);
+      expect(replies[0].id).toEqual('reply-1');
+      expect(replies[0].content).toEqual('test content');
+      expect(replies[0].date).toEqual('2024-11-03T10:24:06.873Z');
+      expect(replies[0].username).toEqual('dicoding');
+      expect(replies[0].is_delete).toEqual(false);
+      expect(replies[0].comment_id).toEqual('comment-1');
     });
   });
 });
