@@ -20,7 +20,7 @@ const createServer = async (container) => {
 
   await server.register([
     { plugin: Jwt },
-    { plugin: RateLimitor },
+    // { plugin: RateLimitor },
   ]);
 
   server.auth.strategy('forumapi_jwt', 'jwt', {
