@@ -2,8 +2,6 @@ const Hapi = require('@hapi/hapi');
 const Jwt = require('@hapi/jwt');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const RateLimitor = require('hapi-rate-limitor');
-// eslint-disable-next-line import/no-extraneous-dependencies
-const Redis = require('ioredis');
 const config = require('../../Commons/config');
 const ClientError = require('../../Commons/exceptions/ClientError');
 const DomainErrorTranslator = require('../../Commons/exceptions/DomainErrorTranslator');
@@ -20,16 +18,9 @@ const createServer = async (container) => {
     port: config.app.port,
   });
 
-  const redisClient = new Redis(process.env.REDIS_URL);
-
   await server.register([
     { plugin: Jwt },
-    {
-      plugin: RateLimitor,
-      options: {
-        redisClient,
-      },
-    },
+    { plugin: RateLimitor },
   ]);
 
   server.auth.strategy('forumapi_jwt', 'jwt', {
