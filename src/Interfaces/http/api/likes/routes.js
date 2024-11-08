@@ -5,6 +5,12 @@ const routes = (handler) => ([
     handler: (request, h) => handler.putLikeCommentHandler(request, h),
     options: {
       auth: 'forumapi_jwt',
+      plugins: {
+        'hapi-rate-limitor': {
+          max: 90,
+          duration: 60000,
+        },
+      },
     },
   },
 ]);

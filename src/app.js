@@ -6,5 +6,4 @@ const container = require('./Infrastructures/container');
   const server = await createServer(container);
   await server.start();
   console.log(`Server running on ${server.info.uri}`);
-  // console.log('Trigger CI');
 })();

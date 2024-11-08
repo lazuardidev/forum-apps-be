@@ -5,6 +5,12 @@ const routes = (handler) => ([
     handler: (request, h) => handler.postCommentHandler(request, h),
     options: {
       auth: 'forumapi_jwt',
+      plugins: {
+        'hapi-rate-limitor': {
+          max: 90,
+          duration: 60000,
+        },
+      },
     },
   },
   {
@@ -13,6 +19,12 @@ const routes = (handler) => ([
     handler: (request, h) => handler.deleteCommentHandler(request, h),
     options: {
       auth: 'forumapi_jwt',
+      plugins: {
+        'hapi-rate-limitor': {
+          max: 90,
+          duration: 60000,
+        },
+      },
     },
   },
 ]);
