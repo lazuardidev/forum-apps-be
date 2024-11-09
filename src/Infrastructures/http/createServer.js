@@ -24,10 +24,6 @@ const createServer = async (container) => {
       plugin: RateLimitor,
       options: {
         redis: process.env.REDIS_URL,
-        extensionPoint: 'onPreAuth',
-        namespace: 'hapi-rate-limitor',
-        max: 90,
-        duration: 60000,
       },
     },
   ]);
