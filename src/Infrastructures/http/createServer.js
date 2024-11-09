@@ -20,7 +20,15 @@ const createServer = async (container) => {
 
   await server.register([
     { plugin: Jwt },
-    { plugin: RateLimitor },
+    {
+      plugin: RateLimitor,
+      options: {
+        redis: {
+          port: 6379,
+          host: process.env.REDIS_URL,
+        },
+      },
+    },
   ]);
 
   server.auth.strategy('forumapi_jwt', 'jwt', {
