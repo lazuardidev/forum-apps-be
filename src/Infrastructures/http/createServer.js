@@ -25,7 +25,7 @@ const createServer = async (container) => {
       options: {
         redis: {
           port: 6379,
-          host: process.env.REDIS_URL,
+          host: 'notable-tiger-32285.upstash.io',
         },
       },
     },
