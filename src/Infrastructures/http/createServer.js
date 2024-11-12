@@ -24,8 +24,6 @@ const createServer = async (container) => {
       plugin: RateLimitor,
       options: {
         redis: process.env.REDIS_URL,
-        max: 30,
-        duration: 60000,
       },
     },
   ]);
